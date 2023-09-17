@@ -13,11 +13,11 @@ An example for study.
 
 Common pc-web components shared by all pc web packages.
 
-## pc-web-container
+## pc-web-container - TODO
 
 Authentication and user related features shared by all pc web packages.
 
-## data-transfer-proxy
+## data-transfer-proxy - TODO
 
 Communication channel between different root features.
 For example, if my-notes wants to call my-documents apis needs to go through data-transfer-proxy.
