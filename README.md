@@ -12,6 +12,7 @@ An example for study.
 ## pc-web-components
 
 Common pc-web components shared by all pc web packages.
+This is a react library which could be puhlished to npm, aws, etc. Storybook included.
 
 ## pc-web-container - TODO
 
