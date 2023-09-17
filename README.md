@@ -1,4 +1,4 @@
-# Getting Started with learning
+# Getting Started with react-nestjs-demo
 
 This project is to study some setups of a medium size product.
 
