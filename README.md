@@ -39,3 +39,5 @@ There could be sub hooks under features. e.g. my-notes/githooks/pre-commit is ca
 
 ## CODEOWNERS
 Required code reviewers.
+
+![Structure](https://github.com/wangsanity/react-nestjs-demo/blob/main/documents/structure/learning.png)
