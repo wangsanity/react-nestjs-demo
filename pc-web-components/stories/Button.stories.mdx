@@ -1,0 +1,23 @@
+import { ArgsTable, Meta, Story, Canvas } from '@storybook/addon-docs';
+import { Button } from '../index';
+
+<Meta title="Components/Form/Button" component={Button} />
+export const Template = (args) => <Button {...args} />;
+
+# MDX Button
+
+Lets define a story for our `Button` component:
+
+<Story name="Primary" args={{ children: 'I am in MDX' }}>
+  {Template.bind({})}
+</Story>
+
+<ArgsTable story="Secondary" />
+
+I want extra description here.
+
+<Canvas>
+  <Story name="Secondary" args={{ children: 'MDX button', role: 'secondary' }}>
+    {Template.bind({})}
+  </Story>
+</Canvas>

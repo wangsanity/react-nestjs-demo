@@ -1,0 +1,34 @@
+{
+    "name": "my-note",
+    "version": "1.0.0",
+    "private": true,
+    "engines": {},
+    "workspaces": {
+        "packages": [
+            "packages/*"
+        ],
+        "nohoist": []
+    },
+    "scripts": {
+        "preinstall": "",
+        "start": "yarn start:api && concurrently \"yarn start:ui\"",
+        "ui:start": "yarn workspace @my-notes/pc-web start",
+        "ui:e2e": "yarn workspace @my-notes/pc-web-e2e e2e",
+        "ui:e2e:headless": "yarn workspace @my-notes/pc-web-e2e e2e:headless",
+        "ui:lint": "yarn workspace @my-notes/pc-web lint",
+        "ui:test": "yarn workspace @my-notes/pc-web test",
+        "ui:test:coverage": "yarn workspace @my-notes/pc-web test:coverage",
+        "api:start": "yarn workspace @my-notes/backend start",
+        "api:start:dev": "yarn workspace @my-notes/backend start",
+        "api:lint": "yarn workspace @my-notes/backend lint",
+        "api:test": "yarn workspace @my-notes/backend test",
+        "api:test:e2e": "yarn workspace @my-notes/backend test:e2e",
+        "db:create": "yarn workspace @my-notes/backend db:create",
+        "db:migration:run": "yarn workspace @my-notes/backend db:migration:run",
+        "db:migration:generate": "yarn workspace @my-notes/backend db:migration:generate",
+        "deploy:dev": ""
+    },
+    "dependencies": {
+        "concurrently": "^7.6.0"
+    }
+}

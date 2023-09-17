@@ -1,0 +1,61 @@
+# https://aws.amazon.com/blogs/devops/integrating-with-github-actions-ci-cd-pipeline-to-deploy-a-web-app-to-amazon-ec2/
+
+# TODO:
+# TODO:
+# TODO:
+name: My notes backend ec2 deploy
+
+on:
+  workflow_dispatch: {}
+
+env:
+  APP_FOLDER: my-notes-backend
+  APP_TEMP_FOLDER: my-notes-backend-temp
+  SERVER_FILE_DIRECTORY: my-notes/infra/backend-server
+  WORKING_DIRECTORY: my-notes/packages/backend
+  AWS_REGION: eu-west-2
+  S3BUCKET: ##s3-bucket## 
+
+jobs:
+  build:
+    name: Build and Package
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - uses: ./.github/actions/use-node
+        with:
+          yarn-lock-path: my-notes/yarn.lock
+      - name: Install packages
+        uses: ./.github/actions/install-packages
+        with:
+          working-directory: ${{ env.WORKING_DIRECTORY }}
+      - name: Yarn build
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: yarn build
+      - name: Copy dist directory if not exist
+        working-directory: ${{ env.SERVER_FILE_DIRECTORY }}
+        run: mkdir -p dist
+      - name: Copy dist files to server file directory
+        working-directory: ${{ env.SERVER_FILE_DIRECTORY }}
+        run: cp -r ../../packages/backend/dist/*/* dist
+
+      - name: Test copyFiles.sh
+        working-directory: ${{ env.SERVER_FILE_DIRECTORY }}
+        run: bash copyFiles.sh
+
+      # - name: Deploy to ec2
+      #   uses: easingthemes/ssh-deploy@main
+      #   env:
+      #     SSH_PRIVATE_KEY: ${ { secrets.EC2_SSH_KEY }}
+      #     REMOTE_HOST: ${ { secrets.EC2_HOST_DNS }}
+      #     REMOTE_USER: ${ { secrets.EC2_USERNAME }}
+      #     SOURCE: ${{ env.SERVER_FILE_DIRECTORY }}
+      #     TARGET: ${{ env.APP_TEMP_FOLDER }}
+      #     SCRIPT_BEFORE: |
+      #       rmdir ${{ env.APP_TEMP_FOLDER }}
+      #     SCRIPT_AFTER: |
+      #       bash copyFiles.sh

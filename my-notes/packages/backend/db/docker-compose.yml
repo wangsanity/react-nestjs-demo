@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  my_notes_db:
+    image: postgres
+    env_file:
+      - ../.env
+    ports:
+      - 3020:5432
+    volumes:
+      - my_notes_db_data:/var/lib/postgresql/data
+      - ./create-db.sql:/docker-entrypoint-initdb.d/init-database.sql
+
+volumes:
+  my_notes_db_data:

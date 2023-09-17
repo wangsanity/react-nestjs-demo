@@ -1,0 +1,73 @@
+# Publish pc-web-components to npm or aws codeartifact.
+# Installation config is in file pc-web-components/README.md
+
+name: 'Publish pc-web-components'
+
+env:
+  WORKING_DIRECTORY: pc-web-components
+  AWS_REGION: eu-west-2
+  AWS_CODEARTIFACT_DOMAIN: learning-domain
+  AWS_ACCOUNT_ID: 750000000017
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish_to:
+        description: "Publish to [npm|aws|all]"
+        required: false
+        default: "npm"
+
+jobs:
+  publish-to-npm:
+    if: ${{ github.event.inputs.publish_to == 'all' || github.event.inputs.publish_to == 'npm' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/use-node
+        with:
+          yarn-lock-path: pc-web-components/yarn.lock
+      - run: yarn install --frozen-lockfile
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+      - name: run lint
+        run: yarn lint
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+      - name: run unit tests
+        run: yarn test
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+      - run: yarn build
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+      - run: npm publish --access public
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-to-aws:
+    if: ${{ github.event.inputs.publish_to == 'all' || github.event.inputs.publish_to == 'aws' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/use-node
+        with:
+          yarn-lock-path: pc-web-components/yarn.lock
+      - name: Configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Setup CodeArtifact
+        run: aws codeartifact login --tool npm --repository learning-packages --domain ${{ env.AWS_CODEARTIFACT_DOMAIN}} --domain-owner ${{ env.AWS_ACCOUNT_ID }} --region ${{ env.AWS_REGION }}
+      - run: yarn install --frozen-lockfile
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+      - name: run lint
+        run: yarn lint
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+      - name: run unit tests
+        run: yarn test
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+      - run: yarn build
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+      - run: yarn publish
+        working-directory: ${{ env.WORKING_DIRECTORY }}

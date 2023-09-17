@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+# If any command fails, exit immediately with that command's exit status
+set -eo pipefail
+
+NORMALCOLOR="\\033[0;39m"
+GREENCOLOR="\\033[1;32m"
+REDCOLOR="\\033[1;31m"
+echoGREEN() {
+  echo -e "$GREENCOLOR" "$1" "$NORMALCOLOR"
+}
+
+echoRED() {
+  echo -e "$REDCOLOR" "$1" "$NORMALCOLOR"
+}
+
+ROOT_FOLDER=$(git rev-parse --show-toplevel)
+CHANGED_FILES=$(git diff --name-only --cached --diff-filter=ACMR)
+SHARED_FILES=*"my-notes/packages/shared/"*
+PC_WEB_FILES=*"my-notes/packages/pc-web/"*
+BACKEND_FILES=*"my-notes/packages/backend/"*
+
+# Check my-notes pc-web
+if [[ $CHANGED_FILES == $PC_WEB_FILES ]]
+then
+    echo "run my-notes pc-web eslint"
+    cd $ROOT_FOLDER/my-notes/packages/pc-web
+    if ! yarn lint; then
+        echoRED "run my-notes pc-web eslint failed"
+        exit 1
+    fi
+    echoGREEN "run my-notes pc-web eslint passed"
+fi
+
+# Check my-notes backend
+if [[ $CHANGED_FILES == $BACKEND_FILES ]]
+then
+    echo "run my-notes backend eslint"
+    cd $ROOT_FOLDER/my-notes/packages/backend
+    if ! yarn lint; then
+        echoRED "run my-notes backend eslint failed"
+        exit 1
+    fi
+    echoGREEN "run my-notes backend eslint passed"
+fi
+
+# Check my-notes shared
+if [[ "$SHARED_FILES" != "" ]]
+then
+    echo "run my-notes shared eslint"
+    cd $ROOT_FOLDER/my-notes/packages/shared
+    if ! yarn lint; then
+        echoRED "run my-notes shared eslint failed"
+        exit 1
+    fi
+    echoGREEN "run my-notes shared eslint passed"
+fi
+
+exit 0

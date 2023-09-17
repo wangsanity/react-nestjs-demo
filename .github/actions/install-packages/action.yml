@@ -1,0 +1,14 @@
+name: 'Setup node'
+
+inputs:
+  working-directory:
+    description: 'working directory'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install packages
+      run: yarn
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}

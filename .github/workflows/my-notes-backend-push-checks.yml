@@ -1,0 +1,56 @@
+# It will be triggered when my-notes backend related files changed.
+# It runs eslint, unit tests and e2e tests.
+
+name: 'My notes backend tests'
+
+on:
+  pull_request:
+    branches:
+      - 'main'
+      - 'releases/**'
+    paths:
+      - 'my-notes/packages/backend/**/*'
+      - 'my-notes/packages/shared/**/*'
+      - '.github/workflows/my-notes-backend-push-checks.yml'
+  workflow_dispatch:
+
+permissions: write-all
+
+defaults:
+  run:
+    working-directory: ./my-notes
+
+jobs:
+  my_notes_backend_lint_unit_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/use-node
+        with:
+          yarn-lock-path: my-notes/yarn.lock
+      - uses: ./.github/actions/install-packages
+        with:
+          working-directory: my-notes
+      - name: Run lint
+        run: yarn api:lint
+      - name: Run unit tests
+        run: yarn api:test
+
+  my_notes_backend_e2e_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/use-node
+        with:
+          yarn-lock-path: my-notes/yarn.lock
+      - uses: ./.github/actions/install-packages
+        with:
+          working-directory: my-notes
+      - name: Create db
+        run: yarn db:create
+      - name: Run db migration
+        run: yarn db:migration:run
+      - name: Run e2e tests
+        run: yarn api:test:e2e

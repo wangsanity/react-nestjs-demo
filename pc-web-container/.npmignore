@@ -1,0 +1,14 @@
+/node_modules
+/initUnusedFiles
+/stories
+.storybook
+
+.eslintrc.js
+.prettierrc.js
+jest.config.js
+rollup.config.mjs
+setupTests.ts
+tsconfig.build.json
+tsconfig.json
+yarn.lock
+

@@ -1,0 +1,11 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import { Input } from '../index';
+
+<Meta title="Components/Form/Input" component={Input} />
+export const Template = (args) => <Input {...args} />;
+
+<Canvas>
+  <Story name="Default" args={{}}>
+    {Template.bind({})}
+  </Story>
+</Canvas>

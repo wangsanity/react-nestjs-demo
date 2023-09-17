@@ -1,0 +1,28 @@
+{
+  "name": "@my-notes/pc-web-e2e",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "cy:open": "cypress open --browser chrome",
+    "cy:run": "cypress run --browser chrome",
+    "start:ui": "node scripts/start-ui.js",
+    "start:api": "node scripts/start-api.js",
+    "start:external:api": "node scripts/external-api.js",
+    "e2e": "yarn && start-test start:api http-get://localhost:3011/api/health start:ui 3001 cy:open",
+    "e2e:headless": "yarn && start-test start:api http-get://localhost:3011/api/health start:ui 3001 cy:run"
+  },
+  "author": "Colin Wang",
+  "license": "MIT",
+  "devDependencies": {
+    "@testing-library/cypress": "^9.0.0",
+    "@types/node": "^18.14.0",
+    "cypress": "^12.6.0",
+    "start-server-and-test": "^1.15.4",
+    "testcontainers": "^9.1.3",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

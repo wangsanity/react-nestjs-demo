@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+      "target": "es2019",
+      "types": ["node", "cypress", "@testing-library/cypress"],
+      "lib": ["dom"],
+      "allowJs": true,
+      "skipLibCheck": true,
+      "esModuleInterop": true,
+      "strict": false,
+      "forceConsistentCasingInFileNames": true,
+      "module": "esnext",
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "isolatedModules": false,
+      "noEmit": true,
+      "baseUrl": ".",
+      "jsx": "preserve"
+    },
+    "include": ["./**/*.ts"]
+  }
+  

@@ -1,0 +1,73 @@
+# It will be triggered when my-notes pc-web related files changed.
+# It runs eslint, unit tests and e2e tests.
+
+name: 'My notes ui tests'
+
+on:
+  pull_request:
+    branches:
+      - 'main'
+      - 'releases/**'
+    paths:
+      - 'my-notes/packages/pc-web/**/*'
+      - 'my-notes/packages/pc-web-e2e/**/*'
+      - 'my-notes/packages/shared/**/*'
+      - '.github/workflows/my-notes-ui-push-checks.yml'
+  workflow_dispatch:
+
+permissions: write-all
+
+defaults:
+  run:
+    working-directory: ./my-notes
+
+jobs:
+  my_notes_ui_lint_unit_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dorny/paths-filter@v2.2.1
+        id: changes
+        with:
+          filters: |
+            ui:
+              - 'my-notes/packages/pc-web/**/*'
+              - 'my-notes/packages/shared/**/*'
+              - '.github/workflows/my-notes-ui-push-checks.yml'
+
+      - if: steps.changes.outputs.ui == 'true'
+        name: Checkout
+        uses: actions/checkout@v3
+
+      - if: steps.changes.outputs.ui == 'true'
+        uses: ./.github/actions/use-node
+        with:
+          yarn-lock-path: my-notes/yarn.lock
+
+      - if: steps.changes.outputs.ui == 'true'
+        uses: ./.github/actions/install-packages
+        with:
+          working-directory: my-notes
+
+      - if: steps.changes.outputs.ui == 'true'
+        name: Run lint
+        run: |
+          yarn ui:lint
+
+      - if: steps.changes.outputs.ui == 'true'
+        name: Run unit tests
+        run: |
+          yarn ui:test
+  
+  my_notes_ui_e2e_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: ./.github/actions/use-node
+        with:
+          yarn-lock-path: my-notes/yarn.lock
+      - uses: ./.github/actions/install-packages
+        with:
+          working-directory: my-notes
+      - name: Run e2e tests
+        run: yarn ui:e2e:headless
