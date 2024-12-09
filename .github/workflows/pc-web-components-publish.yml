@@ -10,6 +10,11 @@ env:
   AWS_ACCOUNT_ID: 750000000017
 
 on:
+  pull_request:
+    branches:
+      - 'main'
+    paths:
+      - 'pc-web-components/**/*'
   workflow_dispatch:
     inputs:
       publish_to:
