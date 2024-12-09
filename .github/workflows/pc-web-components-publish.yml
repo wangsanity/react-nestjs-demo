@@ -24,7 +24,7 @@ on:
 
 jobs:
   publish-to-npm:
-    if: ${{ github.event.inputs.publish_to == 'all' || github.event.inputs.publish_to == 'npm' }}
+    if: ${{ github.event.pull_request.merged == true || github.event.inputs.publish_to == 'all' || github.event.inputs.publish_to == 'npm' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
