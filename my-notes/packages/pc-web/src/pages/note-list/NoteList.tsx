@@ -13,9 +13,14 @@ const NoteList = (): React.ReactElement => {
     padding: '15px'
   };
 
+  const noteTitleStyle: React.CSSProperties = {
+    fontWeight: 'bold',
+    marginBottom: '10px'
+  };
+
   const list = (notes?.list || []).map((note: Note, index: number) => (
     <Box key={index} style={noteStyle}>
-      <Box style={{ fontWeight: 'bold', marginBottom: '10px' }}>{note.title}</Box>
+      <Box style={noteTitleStyle}>{note.title}</Box>
       <Box>{note.detail}</Box>
     </Box>
   ));
