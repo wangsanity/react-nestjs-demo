@@ -14,6 +14,8 @@ node_modules
 /build
 
 # misc
+/**/storybook-static
+/**/dist
 .DS_Store
 .env.local
 .env.development.local
