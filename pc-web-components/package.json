@@ -1,6 +1,6 @@
 {
   "name": "@wanderingleaf/learning-pc-web-components",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "pc web basic components for import",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
