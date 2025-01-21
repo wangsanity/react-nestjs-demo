@@ -77,5 +77,9 @@ jobs:
         working-directory: ${{ env.WORKING_DIRECTORY }}
       - run: yarn publish
         working-directory: ${{ env.WORKING_DIRECTORY }}
+
+  publish-summary:
+    runs-on: ubuntu-latest
+    steps:
       - name: Storybook url
         run: echo -e "${{ env.STORYBOOK_URL }}"
