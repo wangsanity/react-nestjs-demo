@@ -82,4 +82,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Storybook url
-        run: echo -e "${{ env.STORYBOOK_URL }}"
+        run: echo -e "${{ env.STORYBOOK_URL }}" >> $GITHUB_STEP_SUMMARY
