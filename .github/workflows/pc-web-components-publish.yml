@@ -79,6 +79,7 @@ jobs:
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
   publish-summary:
+    name: Publish result
     runs-on: ubuntu-latest
     steps:
       - name: Storybook url
