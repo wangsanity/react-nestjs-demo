@@ -8,6 +8,7 @@ env:
   AWS_REGION: eu-west-2
   AWS_CODEARTIFACT_DOMAIN: learning-domain
   AWS_ACCOUNT_ID: 750000000017
+  STORYBOOK_URL: http://storybook.wangjinglei.com
 
 on:
   pull_request:
@@ -76,3 +77,5 @@ jobs:
         working-directory: ${{ env.WORKING_DIRECTORY }}
       - run: yarn publish
         working-directory: ${{ env.WORKING_DIRECTORY }}
+      - name: Storybook url
+        run: echo -e "${{ env.STORYBOOK_URL }}"
