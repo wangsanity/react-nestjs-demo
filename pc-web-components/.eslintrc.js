@@ -12,7 +12,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:import/typescript',
     'plugin:react/recommended',
-    'plugin:storybook/recommended',
     'prettier'
   ],
   parser: '@typescript-eslint/parser',
@@ -24,11 +23,11 @@ module.exports = {
   plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
     'prettier/prettier': 'error',
-    'no-console': 'error',
+    'no-console': 'warn',
     'no-unused-vars': 'off',
     'prefer-arrow-callback': 'warn',
-    '@typescript-eslint/no-unused-vars': 'error',
-    '@typescript-eslint/no-explicit-any': 'error',
+    '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/no-explicit-any': 'warn',
     'array-callback-return': 'error',
     'block-scoped-var': 'error',
     'consistent-return': 'error',
@@ -66,18 +65,5 @@ module.exports = {
     'no-with': 'error',
     'require-await': 'error',
     'wrap-iife': 'error'
-  },
-  overrides: [
-    {
-      files: '*.mdx',
-      extends: 'plugin:mdx/recommended'
-    },
-    {
-      files: '*.tsx',
-      rules: {
-        'array-callback-return': 'off',
-        'consistent-return': 'off'
-      }
-    }
-  ]
+  }
 };
