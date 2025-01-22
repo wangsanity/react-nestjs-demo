@@ -1,26 +1,19 @@
 import React from 'react';
 import { useAppDispatch, userAppSelector } from '../../app/store';
-import { useNavigate } from 'react-router-dom';
-import { setUser } from '../../app/userSlice';
-import { Box, Button, Input } from '@wanderingleaf/learning-pc-web-components';
+import { Box, Button, Input } from '@wanderingleaf/learning-pc-web-components/dist';
 import { selectTexts } from '../../texts/textsSlice';
-import { routePaths } from '../../app/AppRoutes';
+import { setUser } from '../../app/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Login = (): React.ReactElement => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { textsShort } = userAppSelector(selectTexts);
   const [userName, setUserName] = React.useState('');
   const login = () => {
     if (userName) {
-      dispatch(
-        setUser({
-          name: userName,
-          token: String(new Date().getTime())
-        })
-      );
-
-      navigate(routePaths.home);
+      dispatch(setUser({ name: userName, token: userName }));
+      navigate('/home');
     }
   };
 
