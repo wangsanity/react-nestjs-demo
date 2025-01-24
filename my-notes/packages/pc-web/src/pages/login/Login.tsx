@@ -10,8 +10,9 @@ const Login = (): React.ReactElement => {
   const navigate = useNavigate();
   const { textsShort } = userAppSelector(selectTexts);
   const [userName, setUserName] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const login = () => {
-    if (userName) {
+    if (userName && password) {
       dispatch(setUser({ name: userName, token: userName }));
       navigate('/home');
     }
@@ -19,12 +20,21 @@ const Login = (): React.ReactElement => {
 
   return (
     <Box style={{ textAlign: 'center', padding: '50px' }}>
-      <Box style={{ marginBottom: '20px' }}>
-        <Input
-          placeholder={textsShort?.loginName}
-          onKeyUp={(e) => e.key === 'Enter' && login()}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUserName(e.target.value)}
-        />
+      <Box style={{ marginBottom: '10px' }}>
+        <Box style={{ marginBottom: '10px' }}>
+          <Input
+            placeholder={textsShort?.loginName}
+            onKeyUp={(e) => e.key === 'Enter' && login()}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUserName(e.target.value)}
+          />
+        </Box>
+        <Box>
+          <Input
+            placeholder={textsShort?.password}
+            onKeyUp={(e) => e.key === 'Enter' && login()}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+          />
+        </Box>
       </Box>
       <Box>
         <Button onClick={login}>{textsShort?.login}</Button>
