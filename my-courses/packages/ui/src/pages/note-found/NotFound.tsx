@@ -1,4 +1,4 @@
-import { Box } from '@wanderingleaf/learning-pc-web-components';
+import { Box } from '@wanderingleaf/learning-pc-web-components/dist';
 import React from 'react';
 
 const NotFound = (): React.ReactElement => {

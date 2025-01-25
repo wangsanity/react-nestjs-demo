@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@wanderingleaf/learning-pc-web-components';
+import { Box } from '@wanderingleaf/learning-pc-web-components/dist';
 
 const Home = (): React.ReactElement => {
   return (

@@ -5,7 +5,7 @@ import { Input } from '../index';
 export const Template = (args) => <Input {...args} />;
 
 <Canvas>
-  <Story name="Default" args={{}}>
+  <Story name="Default" args={{ hint: 'I am the hint' }}>
     {Template.bind({})}
   </Story>
 </Canvas>

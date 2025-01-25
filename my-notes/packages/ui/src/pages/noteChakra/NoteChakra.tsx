@@ -1,4 +1,4 @@
-import { ChakraProvider, defaultSystem, Input } from '@chakra-ui/react';
+import { Button, ChakraProvider, defaultSystem, Input } from '@chakra-ui/react';
 import React from 'react';
 
 const Login = (): React.ReactElement => {
@@ -21,8 +21,8 @@ const Login = (): React.ReactElement => {
           </div>
         </div>
         <div>
-          <button style={{ marginRight: '10px' }}>Save</button>
-          <button>Cancel</button>
+          <Button style={{ marginRight: '10px' }}>Save</Button>
+          <Button>Cancel</Button>
         </div>
       </div>
     </ChakraProvider>
